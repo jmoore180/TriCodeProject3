@@ -1,0 +1,6 @@
+Leader: Johnathon Moore
+Project: Project Three
+Description: Work as a team to create a fifteen puzzle using html, css, and javascript.
+Jessica Haines - The base game (everything except extra features), PowerPoint, this file
+K'Lani McClean - extra features, part of presentation
+Johnathon Moore - extra features, put everything together, part of presentation, uploaded to YouTube

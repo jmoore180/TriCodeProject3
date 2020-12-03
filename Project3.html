@@ -1,0 +1,397 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="Project3.css">
+<title>Project 3</title>
+<script language="javascript">
+
+var r1_c1 = new tlocation(0,0);
+var r1_c2 = new tlocation(100,0);
+var r1_c3 = new tlocation(200,0);
+var r1_c4 = new tlocation(300,0);
+var r2_c1 = new tlocation(0,100);
+var r2_c2 = new tlocation(100,100);
+var r2_c3 = new tlocation(200,100);
+var r2_c4 = new tlocation(300,100);
+var r3_c1 = new tlocation(0,200);
+var r3_c2 = new tlocation(100,200);
+var r3_c3 = new tlocation(200,200);
+var r3_c4 = new tlocation(300,200);
+var r4_c1 = new tlocation(0,300);
+var r4_c2 = new tlocation(100,300);
+var r4_c3 = new tlocation(200,300);
+var r4_c4 = new tlocation(300,300);
+
+var tile1 = null;
+var tile2 = null;
+var tile3 = null;
+var tile4 = null;
+var tile5 = null;
+var tile6 = null;
+var tile7 = null;
+var tile8 = null;
+var tile9 = null;
+var tile10 = null;
+var tile11 = null;
+var tile12 = null;
+var tile13 = null;
+var tile14 = null;
+var tile15 = null;
+var empty = null;
+
+var movecounts = 0;
+
+function tlocation(x,y)
+{
+	this.x = x;
+	this.y = y;	
+}
+
+function is_movable(tile)
+{
+	if
+	(
+		tile.style == null ||
+		tile.style.left == null ||
+		tile.style.top == null
+	)
+	{
+		return false;
+	}
+
+	if
+	(
+		empty.x + 100 == parseInt(tile.style.left) && 
+		empty.y == parseInt(tile.style.top)
+	)
+	{
+		return true;
+	}
+	
+	if
+	(
+		empty.x - 100 == parseInt(tile.style.left) && 
+		empty.y == parseInt(tile.style.top)
+	)
+	{
+		return true;
+	}
+	
+	if
+	(
+		empty.x == parseInt(tile.style.left) && 
+		empty.y + 100 == parseInt(tile.style.top)
+	)
+	{
+		return true;
+	}
+	
+	if
+	(
+		empty.x == parseInt(tile.style.left) && 
+		empty.y - 100 == parseInt(tile.style.top)
+	)
+	{
+		return true;
+	}
+	
+	return false;
+	
+}
+
+
+function move(tile) 
+{
+	if(is_movable(tile))
+	{
+		let temp = new tlocation
+		temp.x = parseInt(tile.style.left);
+		temp.y = parseInt(tile.style.top);
+		
+		tile.style.left = empty.x + 'px';
+		tile.style.top = empty.y + 'px';
+		
+		empty.x = temp.x;
+		empty.y = temp.y;
+		
+		apply_hover();
+		movecounts++;
+		document.getElementById("movecount").innerHTML = movecounts;
+		checkWin();
+	}
+	
+}
+
+function shuffle()
+{
+
+	for(let i = 0; i < 1000; i++)
+	{
+		//find neighbors of empty space
+		let movable_tile_list = [];
+		let tile_list = document.querySelectorAll(".tile")
+		
+		for (let key in tile_list)
+		{
+			let tile = tile_list[key];
+			if(is_movable(tile))
+			{
+				movable_tile_list.push(tile);
+			}
+		}
+		//move a random neighbor
+		move(movable_tile_list[parseInt(Math.random()*movable_tile_list.length)]);
+	}
+	movecounts = 0;
+	countTimer();
+
+}
+
+function apply_hover()
+{
+	let movable_tile_list = [];
+	let tile_list = document.querySelectorAll(".tile")
+	
+	for (let key in tile_list)
+	{
+		let tile = tile_list[key];
+		if(is_movable(tile))
+		{
+			// attach move styles
+			tile.classList.add("moveable");
+			//console.log(tile);
+			
+			
+
+		}
+		else
+		{
+			if(tile.classList != null)
+			{
+				// remove move styles
+				tile.classList.remove("moveable");
+			}
+		}
+	}
+}
+
+function set_default()
+{
+	tile1.style.left = r1_c1.x + 'px';
+	tile1.style.top = r1_c1.y + 'px';
+	tile1.style.backgroundPosition = "0px 0px";
+	
+	tile2.style.left = r1_c2.x + 'px';
+	tile2.style.top = r1_c2.y + 'px';
+	tile2.style.backgroundPosition = "-100px 0px";
+	
+	tile3.style.left = r1_c3.x + 'px';
+	tile3.style.top = r1_c3.y + 'px';
+	tile3.style.backgroundPosition = "-200px 0px";
+	
+	tile4.style.left = r1_c4.x + 'px';
+	tile4.style.top = r1_c4.y + 'px';
+	tile4.style.backgroundPosition = "-300px 0px";
+	
+	tile5.style.left = r2_c1.x + 'px';
+	tile5.style.top = r2_c1.y + 'px';
+	tile5.style.backgroundPosition = "0px -100px";
+	
+	tile6.style.left = r2_c2.x + 'px';
+	tile6.style.top = r2_c2.y + 'px';
+	tile6.style.backgroundPosition = "-100px -100px";
+	
+	tile7.style.left = r2_c3.x + 'px';
+	tile7.style.top = r2_c3.y + 'px';
+	tile7.style.backgroundPosition = "-200px -100px";
+	
+	tile8.style.left = r2_c4.x + 'px';
+	tile8.style.top = r2_c4.y + 'px';
+	tile8.style.backgroundPosition = "-300px -100px";
+	
+	tile9.style.left = r3_c1.x + 'px';
+	tile9.style.top = r3_c1.y + 'px';
+	tile9.style.backgroundPosition = "0px -200px";
+	
+	tile10.style.left = r3_c2.x + 'px';
+	tile10.style.top = r3_c2.y + 'px';
+	tile10.style.backgroundPosition = "-100px -200px";
+	
+	tile11.style.left = r3_c3.x + 'px';
+	tile11.style.top = r3_c3.y + 'px';
+	tile11.style.backgroundPosition = "-200px -200px";
+	
+	tile12.style.left = r3_c4.x + 'px';
+	tile12.style.top = r3_c4.y + 'px';
+	tile12.style.backgroundPosition = "-300px -200px";
+	
+	tile13.style.left = r4_c1.x + 'px';
+	tile13.style.top = r4_c1.y + 'px';
+	tile13.style.backgroundPosition = "0px -300px";
+	
+	tile14.style.left = r4_c2.x + 'px';
+	tile14.style.top = r4_c2.y + 'px';
+	tile14.style.backgroundPosition = "-100px -300px";
+	
+	tile15.style.left = r4_c3.x + 'px';
+	tile15.style.top = r4_c3.y + 'px';
+	tile15.style.backgroundPosition = "-200px -300px";	
+	
+	empty = r4_c4;
+	
+	apply_hover();
+
+}
+
+function checkWin(){
+	var final=0;
+	if(r1_c1.x == 0 && r1_c1.y == 0){
+		final++;
+	}
+	if(r1_c2.x == 100 && r1_c2.y == 0){
+		final++;
+	}
+	if(r1_c3.x == 200 && r1_c3.y == 0){
+		final++;
+	}
+	if(r1_c4.x == 300 && r1_c4.y == 0){
+		final++;
+	}
+	if(r2_c1.x == 0 && r2_c1.y == 100){
+		final++;
+	}
+	if(r2_c2.x == 100 && r2_c2.y == 100){
+		final++;
+	}
+	if(r2_c3.x == 200 && r2_c3.y == 100){
+		final++;
+	}
+	if(r2_c4.x == 300 && r2_c4.y == 100){
+		final++;
+	}
+	if(r3_c1.x == 0 && r3_c1.y == 200){
+		final++;
+	}
+	if(r3_c2.x == 100 && r3_c2.y == 200){
+		final++;
+	}
+	if(r3_c3.x == 200 && r3_c3.y == 200){
+		final++;
+	}
+	if(r3_c4.x == 300 && r3_c4.y == 200){
+		final++;
+	}
+	if(r4_c1.x == 0 && r4_c1.y == 300){
+		final++;
+	}
+	if(r4_c2.x == 100 && r4_c2.y == 300){
+		final++;
+	}
+	if(r4_c3.x == 200 && r4_c3.y == 300){
+		final++;
+	}
+	if(r4_c4.x == 300 && r4_c4.y == 300){
+		final++;
+	}
+
+
+	if(final == 16){
+		document.getElementById("gamewin").innerHTML = "congrats";
+	}
+	else{
+		document.getElementById("gamewin").innerHTML = "Keep Trying";
+	}
+}
+
+function main()
+{
+
+	tile1 = document.getElementById('1');
+	tile2 = document.getElementById('2');
+	tile3 = document.getElementById('3');
+	tile4 = document.getElementById('4');
+	tile5 = document.getElementById('5');
+	tile6 = document.getElementById('6');
+	tile7 = document.getElementById('7');
+	tile8 = document.getElementById('8');
+	tile9 = document.getElementById('9');
+	tile10 = document.getElementById('10');
+	tile11 = document.getElementById('11');
+	tile12 = document.getElementById('12');
+	tile13 = document.getElementById('13');
+	tile14 = document.getElementById('14');
+	tile15 = document.getElementById('15');
+	
+	set_default();
+}
+
+function startTimer(duration, display) {
+    var timer = duration, mins, secs;
+    setInterval(function () {
+        mins = parseInt(timer / 60, 10);
+        secs = parseInt(timer % 60, 10);
+
+        mins = mins < 10 ? "0" + mins : mins;
+        secs = secs < 10 ? "0" + secs : secs;
+
+        display.textContent = mins + ":" + secs;
+
+        if (++timer < 0) {
+            timer = duration;
+        }
+    }, 1000);
+}
+
+ function start() {
+    var time = 0,
+    display = document.querySelector('#time');
+    startTimer(time, display);
+
+
+}
+</script>
+</head>
+<body onload="main()">
+<h1>Fifteen Puzzle</h1>
+<p>The goal of the fifteen puzzle is to un-jumble its 
+fifteen squares by repeatedly making moves that slide 
+squares into the empty space. How quickly can you solve 
+it?</p>
+<br><br>                             
+
+<div class="moves">Moves: </div>
+	<p id="movecount">0</p>
+<div class="timer" >Timer: 
+	<span id="time"></span>
+	
+  </div> 
+  <p id="gamewin"></p>
+<div class="board">
+	<div id="1" class="tile" onclick="move(this)"><div class="tilenumber">1</div></div>
+	<div id="2" class="tile" onclick="move(this)"><div class="tilenumber">2</div></div>
+	<div id="3" class="tile" onclick="move(this)"><div class="tilenumber">3</div></div>
+	<div id="4" class="tile" onclick="move(this)"><div class="tilenumber">4</div></div>
+	<div id="5" class="tile" onclick="move(this)"><div class="tilenumber">5</div></div>
+	<div id="6" class="tile" onclick="move(this)"><div class="tilenumber">6</div></div>
+	<div id="7" class="tile" onclick="move(this)"><div class="tilenumber">7</div></div>
+	<div id="8" class="tile" onclick="move(this)"><div class="tilenumber">8</div></div>
+	<div id="9" class="tile" onclick="move(this)"><div class="tilenumber">9</div></div>
+	<div id="10" class="tile" onclick="move(this)"><div class="tilenumber">10</div></div>
+	<div id="11" class="tile" onclick="move(this)"><div class="tilenumber">11</div></div>
+	<div id="12" class="tile" onclick="move(this)"><div class="tilenumber">12</div></div>
+	<div id="13" class="tile" onclick="move(this)"><div class="tilenumber">13</div></div>
+	<div id="14" class="tile" onclick="move(this)"><div class="tilenumber">14</div></div>
+	<div id="15" class="tile" onclick="move(this)"><div class="tilenumber">15</div></div>
+</div>
+<div class="buttoncontainer">
+		<div class="center">
+			<button type="button" onclick="start();shuffle();
+			">Start Game</button>
+		</div>
+</div>
+
+
+<p>American puzzle author and mathematician Sam Loyd is often falsely credited with the creating the puzzle; indeed, Loyd claimed from 1891 until his death in 1911 that he invented it. The puzzle was actually created by Noyes Palmer Chapman, a postmaster in Canastota, New York.</p>
+</body>
+</html>

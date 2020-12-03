@@ -1,0 +1,51 @@
+h1 {text-align: center;}
+.board {
+	height: 400px;
+	width: 400px;
+	position: relative;
+	left: 25%;
+	
+}
+
+.moves, .timer{
+	font-size: 24pt;
+}
+
+
+.tile {
+	position: absolute;
+	height: 96px;
+	width: 96px;
+	border: 2px solid black;
+	background-image: url('Image1.png');
+	
+}
+.tilenumber {
+	font-size: 32pt;
+	font-family: sans-serif;
+	text-align: center;
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+	
+}
+
+.moveable:hover{
+	border: 2px solid red;
+	color: #006600;
+	text-decoration: underline;
+	text-decoration-color: #006600;
+	cursor:grab;
+}
+.buttoncontainer {
+  height: 50px;
+  position: relative;
+}
+.center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
